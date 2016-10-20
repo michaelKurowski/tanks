@@ -1,0 +1,12 @@
+{
+	"terrain": {
+		"grass": {
+			"variations": 5,
+			"animated": false
+		},
+		"sand": {
+			"variations": 5,
+			"animated": false
+		}
+	}
+}
