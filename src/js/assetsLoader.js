@@ -1,5 +1,5 @@
-let assetsConfig = {
-	images: new Map()
+const assetsConfig = {
+	images: new Map(texturesCnf.terrain)
 }
 let assets = {
 	images: new Map(),
@@ -14,22 +14,20 @@ function loadAssets(){
 	//Loads images
 
 	//load images
-	//TODO rewrite function to serve as just universal assets loader 
+	//TODO rewrite function to serve as just universal assets loader
 	function loadImages() {
+		let imagesPromises = []
 		assetsConfig.images.forEach( (element, index, arr) => {
-			var imagesPromises = [];
-			let asset = new Image();
-			asset.src = element;
+			let asset = new Image()
+			asset.src = element
 			imagesPromises.push(
-					new Promise ( (resolve, reject) => {
-					asset.onload = (ev) => {
-						resolve();
-					}
-				});
-			);
+					new Promise ( (resolve, reject) =>
+						asset.onload = ev => resolve(ev) //Fullfils promise once image is loaded
+					)
+			)
 			assets.images[index] = asset;
-		});
-		return imagesPromises;
+		})
+		return imagesPromises
 	};
 	//Go to next step after all images will be loaded
 	Promise.all(  loadImages()  )

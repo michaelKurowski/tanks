@@ -4,25 +4,25 @@ Small collection of functions that are essential for games related calculations
 
 */
 var mkMath = {
-	addVector(vecA, vecB) {
+	addVr(vecA, vecB) {
 		return vecA.map( (elem, index) => elem + vecB[index] )
 	},
-	scaleVector(vec, scalar) {
+	scaleVr(vec, scalar) {
 		return vecA.map( elem => elem * scalar )
 	},
-	subtractVector(vecA, vecB){
+	subtractVr(vecA, vecB){
 		return vecA.map( (elem, index) => elem - vecB[index] )
 	},
-	calcLength(vec){
+	calcLengthr(vec){
 		let dimension = vec.length;
 		let vecLength = vec.reduce( (prevVal, currVal) => prevVal + currVal*currVal, 0 )
 		return vecLength = Math.sqrt(vecLength)
 	},
-	toUnitVector(vec) {
+	toUnitVr(vec) {
 		let vectorLength = this.determineLength(vec)
 		return vec.map( elem => elem / vectorLength )
 	},
-	angleBetween2Vec(vecA, vecB){
+	angleBetween2Vr(vecA, vecB){
 		return Math.atan2( ...this.subtractVector(vecA, vecB) )
 	},
 	transpose(matrix) {
@@ -44,7 +44,7 @@ var mkPhys = {
 	},
 	computeForce(acceleration, mass) {
 		if (mass <= 0) throw "Mass must be bigger than 0."
-		return scaleVector(acceleration, mass)
+		return mkMath.scaleVector(acceleration, mass)
 	}
 
 }
