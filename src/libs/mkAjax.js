@@ -1,6 +1,6 @@
 //Version 00.00.01
 
-var mkAx = function (params) {
+var ajax = function (params) {
 	(  {target, type = "GET"} = params  )
 	let xhttp = new XMLHttpRequest();
 	let prom = new Promise ( (resolve, reject) => {
