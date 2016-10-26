@@ -1,8 +1,8 @@
 const assetsConfig = {
-	images: new Map(texturesCnf.terrain)
+	images: texturesCnf
 }
 let assets = {
-	images: new Map(),
+	images: {},
 	imagesReadiness: [ //list of promises for loading images from ["images"] property
 
 	]
@@ -10,22 +10,36 @@ let assets = {
 
 //Loads assets from assets object, return promise
 function loadAssets(){
-	//TODO: reading assets config from assets/config.json instead of from var
-	//Loads images
 
 	//load images
-	//TODO rewrite function to serve as just universal assets loader
+	//TODO rewrite function to serve as just universal assets loader (?)
 	function loadImages() {
 		let imagesPromises = []
-		assetsConfig.images.forEach( (element, index, arr) => {
-			let asset = new Image()
-			asset.src = element
-			imagesPromises.push(
-					new Promise ( (resolve, reject) =>
-						asset.onload = ev => resolve(ev) //Fullfils promise once image is loaded
+
+		Object.keys(assetsConfig.images).forEach( (imgsGroup, imgTypeIndex, imgTypeArr) => { //Iterate through .images in config
+			const loopedImgGroupKeys = Object.keys(assetsConfig.images[imgsGroup])
+			loopedImgGroupKeys.forEach( (sprite, spriteIndex, spriteArr) => { //Iterate through sprites in image groups (example: through terrain tiles in Terrain group)
+				assets.images[sprite] = {} //creating sprite
+				const loopedSpriteInfo = assetsConfig.images[imgsGroup][sprite]
+				const variations = loopedSpriteInfo.variations - 1
+
+				let textureVariationsList = [] //set of sprite variations
+
+				//reads all variations recursively and saves their onLoad promises to the value that will be returned
+				;(function readTextureVariations (vars){
+					const textureVariation = new Image()
+					textureVariation.src = `assets/images/${imgsGroup}/${sprite}/${vars}.${loopedSpriteInfo.extension}`
+					imagesPromises.push(
+						new Promise ( (resolve, reject) =>
+							textureVariation.onload = ev => resolve(ev) //Fullfils promise once image is loaded
+						)
 					)
-			)
-			assets.images[index] = asset;
+					textureVariationsList.push(textureVariation)
+					if (vars) readTextureVariations(--vars)
+				})(variations)
+
+				assets.images[sprite] = textureVariationsList //sprite is set of texture variations
+			})
 		})
 		return imagesPromises
 	};

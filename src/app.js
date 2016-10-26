@@ -33,9 +33,8 @@ void function init () {
 	fitCanvas();
 
 	//Loading assets
-	loadAssets().then( () => {
-		
-	})
+	//loadAssets().then( () => { })
+	loadAssets()
 }()
 
 function logicTick() {
