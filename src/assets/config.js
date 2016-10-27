@@ -2,7 +2,7 @@
 const texturesCnf = {
 	terrain: {
 		grass: {
-			variations: 2,
+			variations: 4,
 			animated: false,
 			extension: 'png'
 		},

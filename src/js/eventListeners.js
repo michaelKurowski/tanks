@@ -1,3 +1,3 @@
-document.onresize = () => {
+window.onresize = () => {
 	fitCanvas();
 }

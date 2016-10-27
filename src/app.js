@@ -63,7 +63,7 @@ function renderScene() {
 	let vertically = tilesVertically
 	while(horizontally-- > -1){ //TODO fix these statements
 		while(vertically-- > -1){
-			const variant = Math.abs(Math.round((terrainSeed * horizontally + vertically) / terrainSeed) % 2)
+			const variant = Math.abs( Math.round( mkMath.srand(horizontally) + mkMath.srand(vertically) ) ) % assets.images.terrain.grass.length
 			ctx.drawImage(assets.images.terrain.grass[variant], horizontally * tileSize, vertically * tileSize, tileSize, tileSize)
 		}
 		vertically = tilesVertically

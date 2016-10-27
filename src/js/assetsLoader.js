@@ -1,6 +1,5 @@
-const assetsConfig = {
-	images: texturesCnf
-}
+const assetsConfig = {images: texturesCnf}
+
 let assets = {
 	images: {},
 	imagesReadiness: [ //list of promises for loading images from ["images"] property

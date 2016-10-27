@@ -33,6 +33,9 @@ var mkMath = {
 	},
 	pyth(a, b, root = true){ //Pythagoras
 		return root ? Math.sqrt(a*a + b*b) : a*a + b*b
+	},
+	srand(seed){
+		return 1103515245 * seed + 812345 % Math.pow(2,32)
 	}
 
 
