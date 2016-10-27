@@ -18,13 +18,13 @@ function loadAssets(){
 
 		Object.keys(assetsConfig.images).forEach( (imgsGroup, imgTypeIndex, imgTypeArr) => { //Iterate through .images in config
 			const loopedImgGroupKeys = Object.keys(assetsConfig.images[imgsGroup])
+			assets.images[imgsGroup] = {} //creating images group
 			loopedImgGroupKeys.forEach( (sprite, spriteIndex, spriteArr) => { //Iterate through sprites in image groups (example: through terrain tiles in Terrain group)
-				assets.images[sprite] = {} //creating sprite
+				assets.images[imgsGroup][sprite] = {} //creating sprite
 				const loopedSpriteInfo = assetsConfig.images[imgsGroup][sprite]
 				const variations = loopedSpriteInfo.variations - 1
 
 				let textureVariationsList = [] //set of sprite variations
-
 				//reads all variations recursively and saves their onLoad promises to the value that will be returned
 				;(function readTextureVariations (vars){
 					const textureVariation = new Image()
@@ -38,13 +38,18 @@ function loadAssets(){
 					if (vars) readTextureVariations(--vars)
 				})(variations)
 
-				assets.images[sprite] = textureVariationsList //sprite is set of texture variations
+				assets.images[imgsGroup][sprite] = textureVariationsList //sprite is set of texture variations
 			})
 		})
 		return imagesPromises
 	};
+
 	//Go to next step after all images will be loaded
+	return loadImages()
+	/*
 	Promise.all(  loadImages()  )
 		.then( (value, error) => {
 	})
+	*/
+
 }
