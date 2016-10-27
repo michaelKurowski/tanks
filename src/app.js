@@ -20,8 +20,9 @@
 */
 
 const tileSize = 100
-const renderFrequency = 16;
-const logicFrequency = 10;
+const renderFrequency = 16
+const logicFrequency = 10
+const terrainSeed = 515525
 
 const cnv = document.getElementById('cnv')
 const cnvBuff = document.getElementById("cnvBuff")
@@ -29,23 +30,20 @@ const cnvBuff = document.getElementById("cnvBuff")
 const ctx = cnv.getContext("2d")
 const ctxBuff = cnvBuff.getContext("2d")
 
-
-
-
+let entities = []
 let lastRender = new Date().getTime()
 
 
-let terrainSeed = 515525
-
 
 void function init () {
-	fitCanvas();
+	fitCanvas()
+	entities.push( tank([20, 20], 'rhino', 0) )
 
 	//Loading assets
 	//loadAssets().then( () => { })
-	console.log(Promise.all(loadAssets()).then(()=>{
+	Promise.all(loadAssets()).then(()=>{
 		setInterval(logicTick, logicFrequency)
-	}))//Temp
+	})//Temp
 }()
 
 function logicTick() {
@@ -70,7 +68,13 @@ function renderScene() {
 		}
 		vertically = tilesVertically
 	}
-
+	//TODO: finish it
+	entities.forEach( entity => {
+		ctx.drawImage(assets.images.tanks[entity.sprite][2], entity.pos[0], entity.pos[1], 250, 250)
+		ctx.drawImage(assets.images.tanks[entity.sprite][1], entity.pos[0], entity.pos[1], 250, 250)
+		ctx.drawImage(assets.images.tanks[entity.sprite][0], entity.pos[0], entity.pos[1], 250, 250)
+	})
+	//Drawing entities
 }
 
 

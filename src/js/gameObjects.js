@@ -1,6 +1,7 @@
-const tank = function (position, rotation) {
+const tank = function (position, type, rotation) {
 	let newTank = Object.create(entity)
-	return {position, rotation}
+	newTank.sprite = type
+	return newTank
 }
 
 const entity = {

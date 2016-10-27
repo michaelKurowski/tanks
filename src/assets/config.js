@@ -11,5 +11,12 @@ const texturesCnf = {
 			animated: false,
 			extension: 'png'
 		}
+	},
+	tanks: {
+		rhino:{
+			variations: 3,
+			animated: false,
+			extension: 'png'
+		}
 	}
 }
