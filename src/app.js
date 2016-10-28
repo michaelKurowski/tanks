@@ -30,6 +30,8 @@ const cnvBuff = document.getElementById("cnvBuff")
 const ctx = cnv.getContext("2d")
 const ctxBuff = cnvBuff.getContext("2d")
 
+let player = {}
+
 let entities = []
 let lastRender = new Date().getTime()
 
@@ -38,7 +40,7 @@ let lastRender = new Date().getTime()
 void function init () {
 	fitCanvas()
 	entities.push( tank([20, 20], 'rhino', 0) )
-
+	player = entities[0]
 	//Loading assets
 	//loadAssets().then( () => { })
 	Promise.all(loadAssets()).then(()=>{
@@ -47,7 +49,7 @@ void function init () {
 }()
 
 function logicTick() {
-
+	player.propagate()
 
 	let currentTime = new Date().getTime();
 	if ( (lastRender + renderFrequency) < currentTime ) requestAnimationFrame(renderScene)
@@ -70,9 +72,22 @@ function renderScene() {
 	}
 	//TODO: finish it
 	entities.forEach( entity => {
-		ctx.drawImage(assets.images.tanks[entity.sprite][2], entity.pos[0], entity.pos[1], 250, 250)
-		ctx.drawImage(assets.images.tanks[entity.sprite][1], entity.pos[0], entity.pos[1], 250, 250)
-		ctx.drawImage(assets.images.tanks[entity.sprite][0], entity.pos[0], entity.pos[1], 250, 250)
+		const sprite = assets.images.tanks[entity.sprite]
+		const angle = entity.rotation
+		const headingVector = [Math.cos(entity.rotation), Math.sin(entity.rotation)]
+
+		ctx.save();
+		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
+		// rotate the canvas to the specified degrees
+		ctx.rotate(angle - 1.57079633)
+		ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
+
+		ctx.drawImage(sprite[2], entity.pos[0], entity.pos[1], 250, 250)
+		ctx.drawImage(sprite[1], entity.pos[0], entity.pos[1], 250, 250)
+		ctx.drawImage(sprite[0], entity.pos[0], entity.pos[1], 250, 250)
+
+		ctx.restore();
+
 	})
 	//Drawing entities
 }

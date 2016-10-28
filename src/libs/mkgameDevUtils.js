@@ -8,7 +8,7 @@ var mkMath = {
 		return vecA.map( (elem, index) => elem + vecB[index] )
 	},
 	scaleVr(vec, scalar) {
-		return vecA.map( elem => elem * scalar )
+		return vec.map( elem => elem * scalar )
 	},
 	subtractVr(vecA, vecB){
 		return vecA.map( (elem, index) => elem - vecB[index] )
@@ -19,7 +19,7 @@ var mkMath = {
 		return vecLength = Math.sqrt(vecLength)
 	},
 	toUnitVr(vec) {
-		let vectorLength = this.determineLength(vec)
+		const vectorLength = this.calcVrLength(vec)
 		return vec.map( elem => elem / vectorLength )
 	},
 	angleBetween2Vr(vecA, vecB){
@@ -36,6 +36,9 @@ var mkMath = {
 	},
 	srand(seed){
 		return 1103515245 * seed + 812345 % Math.pow(2,32)
+	},
+	calcVrLength(vec){
+		return this.pyth(vec[0], vec[1])
 	}
 
 
