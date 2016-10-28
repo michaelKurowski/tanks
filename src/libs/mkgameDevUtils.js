@@ -13,11 +13,6 @@ var mkMath = {
 	subtractVr(vecA, vecB){
 		return vecA.map( (elem, index) => elem - vecB[index] )
 	},
-	calcLengthr(vec){
-		let dimension = vec.length;
-		let vecLength = vec.reduce( (prevVal, currVal) => prevVal + currVal*currVal, 0 )
-		return vecLength = Math.sqrt(vecLength)
-	},
 	toUnitVr(vec) {
 		const vectorLength = this.calcVrLength(vec)
 		return vec.map( elem => elem / vectorLength )
