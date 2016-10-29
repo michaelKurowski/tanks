@@ -74,8 +74,7 @@ function renderScene() {
 	entities.forEach( entity => {
 		const sprite = assets.images.tanks[entity.sprite]
 		const angle = entity.rotation
-		const headingVector = entity.calcHeadingVr()
-
+		entity.animateHull(mkAnims.wiggling)
 		ctx.save();
 		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
 		// rotate the canvas to the specified degrees
@@ -83,8 +82,15 @@ function renderScene() {
 		ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
 
 		ctx.drawImage(sprite[2], entity.pos[0], entity.pos[1], 250, 250)
-		ctx.drawImage(sprite[1], entity.pos[0], entity.pos[1], 250, 250)
-		ctx.drawImage(sprite[0], entity.pos[0], entity.pos[1], 250, 250)
+		ctx.drawImage(sprite[1], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
+
+		const turretAngle = entity.turretRotation
+		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
+		// rotate the canvas to the specified degrees
+		ctx.rotate(turretAngle)
+		ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
+
+		ctx.drawImage(sprite[0], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
 
 		ctx.restore();
 

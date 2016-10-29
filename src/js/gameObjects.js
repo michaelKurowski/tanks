@@ -33,6 +33,12 @@ const entity = {
 const tankProto = Object.assign(entity, {
 	sprite: '',
 	thrust: 8,
+	rotation: 0,
+	turretRotation: 0,
+	hullOffset: [-2 ,-2],
+	turretOffset: [0, 0],
+	hullAnimTimer: [0, 5],
+	turretAnimTimer: [0, 20],
 	drivePush(forwardOrBackward) { //forward = 1, backward = -1
 		const headingVector = this.calcHeadingVr()
 		const direction = mkMath.scaleVr(mkMath.toUnitVr(headingVector), forwardOrBackward)
@@ -55,5 +61,19 @@ const tankProto = Object.assign(entity, {
 
 		const accelDirection = mkMath.hadamardProductVr(mkMath.getNegNumbersVr(this.accel), facingDirection)
 		this.accel = mkMath.scaleVr(accelDirection, accelLength)
+	},
+	animateHull(animFunction){//Definitelly deserves some refactoring and redesign
+		if (this.hullAnimTimer[0]++ > this.hullAnimTimer[1]) { //Reseting anim
+			this.hullAnimTimer[0] = 0
+		}
+		this.hullOffset = animFunction(this.hullAnimTimer, this.hullOffset)
+
+		if (this.hullOffset[0] > 5) this.hullOffset[0] = 5
+		if (this.hullOffset[1] > 5) this.hullOffset[1] = 5
+		if (this.hullOffset[0] < -5) this.hullOffset[0] = -5
+		if (this.hullOffset[1] < -5) this.hullOffset[1] = -5
+
 	}
+
+
 })
