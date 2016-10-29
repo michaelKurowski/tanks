@@ -13,8 +13,15 @@ const texturesCnf = {
 		}
 	},
 	tanks: {
-		rhino:{
+		rhino: {
 			variations: 3,
+			animated: false,
+			extension: 'png'
+		}
+	},
+	projectiles: {
+		AA: {
+			variations: 1,
 			animated: false,
 			extension: 'png'
 		}
