@@ -11,12 +11,10 @@ onkeydown = e => {
 			modifier = 1
 			break
 		case 37://left
-			player.rotation-= 0.03
-			console.log(player.rotation)
+			player.rotation-= 0.02
 			return
 		case 39://right
-			player.rotation+= 0.03
-			console.log(player.rotation)
+			player.rotation+= 0.02
 			return
 		default:
 			return

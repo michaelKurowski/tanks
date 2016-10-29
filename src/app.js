@@ -74,7 +74,7 @@ function renderScene() {
 	entities.forEach( entity => {
 		const sprite = assets.images.tanks[entity.sprite]
 		const angle = entity.rotation
-		const headingVector = [Math.cos(entity.rotation), Math.sin(entity.rotation)]
+		const headingVector = entity.calcHeadingVr()
 
 		ctx.save();
 		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)

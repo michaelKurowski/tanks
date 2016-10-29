@@ -34,6 +34,16 @@ var mkMath = {
 	},
 	calcVrLength(vec){
 		return this.pyth(vec[0], vec[1])
+	},
+	getNegNumbersVr(vec){
+
+		return [(vec[0] > 0) ? 1 : -1, (vec[1] > 0) ? 1 : -1]
+	},
+	crossProduct(vecA, vecB){
+		return [vecA[0] * vecB[0] + vecA[0] * vecB[1], vecA[1] * vecB[0] + vecA[1] * vecB[1]]
+	},
+	hadamardProductVr(vecA, vecB){
+		return [vecA[0] * vecB[0], vecA[1] * vecB[1]]
 	}
 
 
