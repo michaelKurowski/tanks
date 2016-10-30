@@ -55,12 +55,23 @@ const tankProto = Object.assign(entity, {
 		this.move()
 	},
 	adjustTrack(){ //TODO fix it
+
 		const headingVector = this.calcHeadingVr()
 		const facingDirection = mkMath.toUnitVr(headingVector)
 		const accelLength = mkMath.calcVrLength(this.accel)
 
+		this.accel = mkMath.scaleVr(facingDirection, accelLength)
+		/*
+		const correctBackDirection
+
+		const accelToBackDiff =  Math.abs(  mkMath.subtractVr(  this.accel, mkMath.hadamardProductVr(mkMath.scaleVr(facingDirection, -accelLength))   ) )
+		const accelToFrontDiff = Math.abs( mkMath.subtractVr(  this.accel, mkMath.hadamardProductVr(mkMath.scaleVr(facingDirection, accelLength))     ) )
+
+
+		const correctDirection = ( accelToFrontDiff > accelToBackDiff ) ? this.accel.map( (el, index) => el +  )
 		const accelDirection = mkMath.hadamardProductVr(mkMath.getNegNumbersVr(this.accel), facingDirection)
 		this.accel = mkMath.scaleVr(accelDirection, accelLength)
+		*/
 	},
 	animateHull(animFunction){//Definitelly deserves some refactoring and redesign
 		if (this.hullAnimTimer[0]++ > this.hullAnimTimer[1]) { //Reseting anim

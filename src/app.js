@@ -30,6 +30,8 @@ const cnvBuff = document.getElementById("cnvBuff")
 const ctx = cnv.getContext("2d")
 const ctxBuff = cnvBuff.getContext("2d")
 
+const keysStatus = new Array(300)
+
 let player = {}
 
 let entities = []
@@ -49,6 +51,18 @@ void function init () {
 }()
 
 function logicTick() {
+
+	let modifier
+	if (keysStatus[37]) player.turretRotation-= 0.06
+	if (keysStatus[39]) player.turretRotation+= 0.06
+
+	if (keysStatus[83]) modifier = -1
+	if (keysStatus[87]) modifier = 1
+
+	if (keysStatus[65]) player.rotation -= 0.07
+	if (keysStatus[68]) player.rotation += 0.07
+
+	if (modifier) player.drivePush(modifier)
 	player.propagate()
 
 	let currentTime = new Date().getTime();
