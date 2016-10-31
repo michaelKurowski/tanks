@@ -55,12 +55,23 @@ const tankProto = Object.assign(entity, {
 		this.move()
 	},
 	adjustTrack(){ //TODO fix it
-
+/*
 		const headingVector = this.calcHeadingVr()
 		const facingDirection = mkMath.toUnitVr(headingVector)
 		const accelLength = mkMath.calcVrLength(this.accel)
 
-		this.accel = mkMath.scaleVr(facingDirection, accelLength)
+		const leftVr = mkMath.scaleVr([-facingDirection[1], facingDirection[0]], accelLength)
+		const rightVr = mkMath.scaleVr([facingDirection[0], -facingDirection[1]], accelLength)
+		//this.accel = mkMath.scaleVr(facingDirection, accelLength)
+		//this.accel = mkMath.subtractVr(this.accel, leftVr)
+		//this.accel = mkMath.subtractVr(this.accel, rightVr)
+		ctx.beginPath()
+		ctx.moveTo(this.pos[0],this.pos[1])
+		ctx.lineTo(leftVr[0],leftVr[1])
+		ctx.stroke()
+		ctx.closePath()
+
+		*/
 		/*
 		const correctBackDirection
 

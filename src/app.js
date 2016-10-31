@@ -1,23 +1,3 @@
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
 
 const tileSize = 100
 const renderFrequency = 16
@@ -43,8 +23,6 @@ void function init () {
 	fitCanvas()
 	entities.push( tank([20, 20], 'rhino', 0) )
 	player = entities[0]
-	//Loading assets
-	//loadAssets().then( () => { })
 	Promise.all(loadAssets()).then(()=>{
 		setInterval(logicTick, logicFrequency)
 	})//Temp
@@ -88,6 +66,7 @@ function renderScene() {
 	entities.forEach( entity => {
 		const sprite = assets.images.tanks[entity.sprite]
 		const angle = entity.rotation
+		//
 		entity.animateHull(mkAnims.wiggling)
 		ctx.save();
 		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)

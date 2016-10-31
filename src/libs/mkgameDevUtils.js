@@ -35,8 +35,7 @@ var mkMath = {
 	calcVrLength(vec){
 		return this.pyth(vec[0], vec[1])
 	},
-	getNegNumbersVr(vec){
-
+	getNegNumbersVr(vec){ //takes vector and returns vector which describes signs of every vector element
 		return [(vec[0] > 0) ? 1 : -1, (vec[1] > 0) ? 1 : -1]
 	},
 	crossProduct(vecA, vecB){
@@ -44,6 +43,10 @@ var mkMath = {
 	},
 	hadamardProductVr(vecA, vecB){
 		return [vecA[0] * vecB[0], vecA[1] * vecB[1]]
+	},
+	getPerpendicularVr(vec, clockwise){
+		if (clockwise) return [-vec[1], vec[0]]
+		return [vec[1], -vec[0]]
 	}
 
 
