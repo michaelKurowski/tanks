@@ -10,43 +10,52 @@ var mkMath = {
 	scaleVr(vec, scalar) {
 		return vec.map( elem => elem * scalar )
 	},
-	subtractVr(vecA, vecB){
+	subtractVr(vecA, vecB) {
 		return vecA.map( (elem, index) => elem - vecB[index] )
 	},
 	toUnitVr(vec) {
 		const vectorLength = this.calcVrLength(vec)
 		return vec.map( elem => elem / vectorLength )
 	},
-	angleBetween2Vr(vecA, vecB){
+	angleBetween2Vr(vecA, vecB) {
 		return Math.atan2( ...this.subtractVector(vecA, vecB) )
 	},
 	transpose(matrix) {
 		return matrix[0].map( (col, i) => matrix.map(row => row[i]) )
 	},
-	multiplyMatrixes(matrixA, matrixB){
+	multiplyMatrixes(matrixA, matrixB) {
 		//TODO (this is not a proper hour to write matrix multiplication)
 	},
 	pyth(a, b, root = true){ //Pythagoras
 		return root ? Math.sqrt(a*a + b*b) : a*a + b*b
 	},
-	srand(seed){
+	srand(seed) {
 		return 1103515245 * seed + 812345 % Math.pow(2,32)
 	},
-	calcVrLength(vec){
+	calcVrLength(vec) {
 		return this.pyth(vec[0], vec[1])
 	},
-	getNegNumbersVr(vec){ //takes vector and returns vector which describes signs of every vector element
+	getNegNumbersVr(vec) { //takes vector and returns vector which describes signs of every vector element
 		return [(vec[0] > 0) ? 1 : -1, (vec[1] > 0) ? 1 : -1]
 	},
-	crossProduct(vecA, vecB){
+	crossProduct(vecA, vecB) {
 		return [vecA[0] * vecB[0] + vecA[0] * vecB[1], vecA[1] * vecB[0] + vecA[1] * vecB[1]]
 	},
-	hadamardProductVr(vecA, vecB){
+	hadamardProductVr(vecA, vecB) {
 		return [vecA[0] * vecB[0], vecA[1] * vecB[1]]
 	},
-	getPerpendicularVr(vec, clockwise){
+	getPerpendicularVr(vec, clockwise) {
 		if (clockwise) return [-vec[1], vec[0]]
 		return [vec[1], -vec[0]]
+	},
+	quadrFunFac(a = 0, b = 0, c = 0) {
+		return x => a * x * x + b * x + c
+	},
+	recurr(cbCondition, cbCode, val){
+		while(cbCondition(val)) {
+			val = cbCode(val)
+		}
+		return val
 	}
 
 
