@@ -7,6 +7,9 @@ var mkMath = {
 	addVr(vecA, vecB) {
 		return vecA.map( (elem, index) => elem + vecB[index] )
 	},
+	sumVec(...vectors) {
+		return vectors.reduce( (prevVal, currVal) => this.addVr(prevVal, currVal) ) 
+	},
 	scaleVr(vec, scalar) {
 		return vec.map( elem => elem * scalar )
 	},
@@ -51,7 +54,7 @@ var mkMath = {
 	quadrFunFac(a = 0, b = 0, c = 0) {
 		return x => a * x * x + b * x + c
 	},
-	recurr(cbCondition, cbCode, val){
+	recurr(cbCondition, cbCode, val){ //Allows for recursion without exceeding maximum stack size
 		while(cbCondition(val)) {
 			val = cbCode(val)
 		}

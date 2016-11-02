@@ -55,34 +55,20 @@ const tankProto = Object.assign(entity, {
 		this.move()
 	},
 	adjustTrack(){ //TODO fix it
-/*
+
 		const headingVector = this.calcHeadingVr()
 		const facingDirection = mkMath.toUnitVr(headingVector)
 		const accelLength = mkMath.calcVrLength(this.accel)
 
-		const leftVr = mkMath.scaleVr([-facingDirection[1], facingDirection[0]], accelLength)
-		const rightVr = mkMath.scaleVr([facingDirection[0], -facingDirection[1]], accelLength)
-		//this.accel = mkMath.scaleVr(facingDirection, accelLength)
-		//this.accel = mkMath.subtractVr(this.accel, leftVr)
-		//this.accel = mkMath.subtractVr(this.accel, rightVr)
-		ctx.beginPath()
-		ctx.moveTo(this.pos[0],this.pos[1])
-		ctx.lineTo(leftVr[0],leftVr[1])
-		ctx.stroke()
-		ctx.closePath()
+		const leftVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, true), accelLength)
+		const rightVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, false), accelLength)
 
-		*/
-		/*
-		const correctBackDirection
-
-		const accelToBackDiff =  Math.abs(  mkMath.subtractVr(  this.accel, mkMath.hadamardProductVr(mkMath.scaleVr(facingDirection, -accelLength))   ) )
-		const accelToFrontDiff = Math.abs( mkMath.subtractVr(  this.accel, mkMath.hadamardProductVr(mkMath.scaleVr(facingDirection, accelLength))     ) )
+		const correctVec = mkMath.scaleVr(facingDirection, accelLength)
 
 
-		const correctDirection = ( accelToFrontDiff > accelToBackDiff ) ? this.accel.map( (el, index) => el +  )
-		const accelDirection = mkMath.hadamardProductVr(mkMath.getNegNumbersVr(this.accel), facingDirection)
-		this.accel = mkMath.scaleVr(accelDirection, accelLength)
-		*/
+
+		this.accel = [ (correctVec[0] + this.accel[0]) / 2, (correctVec[1] + this.accel[1]) /2  ] //Tracks friction
+
 	},
 	animateHull(animFunction){//Definitelly deserves some refactoring and redesign
 		if (this.hullAnimTimer[0]++ > this.hullAnimTimer[1]) { //Reseting anim

@@ -12,6 +12,8 @@ const ctxBuff = cnvBuff.getContext("2d")
 
 const keysStatus = new Array(300)
 
+const debugmode = false
+
 let player = {}
 
 let entities = []
@@ -47,6 +49,8 @@ function logicTick() {
 	if ( (lastRender + renderFrequency) < currentTime ) requestAnimationFrame(renderScene)
 }
 function renderScene() {
+
+
 
 
 
@@ -86,6 +90,37 @@ function renderScene() {
 		ctx.drawImage(sprite[0], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
 
 		ctx.restore();
+
+		//TODO remove
+		const headingVector = entity.calcHeadingVr()
+		const facingDirection = mkMath.toUnitVr(headingVector)
+		const accelLength = mkMath.calcVrLength(entity.accel)
+
+		const leftVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, true), 200*accelLength)
+		const rightVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, false), 200*accelLength)
+		const frontVr = mkMath.scaleVr(facingDirection, 200*accelLength)
+
+
+		if (debugmode) {
+			ctx.beginPath()
+			ctx.strokeStyle="red"
+			ctx.moveTo(entity.pos[0],entity.pos[1])
+			ctx.lineTo(entity.pos[0] +leftVr[0],entity.pos[1] + leftVr[1])
+			ctx.stroke()
+			ctx.closePath()
+			ctx.strokeStyle="green"
+			ctx.beginPath()
+			ctx.moveTo(entity.pos[0],entity.pos[1])
+			ctx.lineTo(entity.pos[0] + rightVr[0], entity.pos[1] + rightVr[1])
+			ctx.stroke()
+			ctx.closePath()
+			ctx.strokeStyle="blue"
+			ctx.beginPath()
+			ctx.moveTo(entity.pos[0],entity.pos[1])
+			ctx.lineTo(entity.pos[0] +frontVr[0],entity.pos[1] +frontVr[1])
+			ctx.stroke()
+			ctx.closePath()
+		}
 
 	})
 	//Drawing entities
