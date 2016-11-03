@@ -8,7 +8,7 @@ var mkMath = {
 		return vecA.map( (elem, index) => elem + vecB[index] )
 	},
 	sumVec(...vectors) {
-		return vectors.reduce( (prevVal, currVal) => this.addVr(prevVal, currVal) ) 
+		return vectors.reduce( (prevVal, currVal) => this.addVr(prevVal, currVal) )
 	},
 	scaleVr(vec, scalar) {
 		return vec.map( elem => elem * scalar )
@@ -59,6 +59,9 @@ var mkMath = {
 			val = cbCode(val)
 		}
 		return val
+	},
+	reverseVec(vec){
+		return [-vec[0], -vec[1]]
 	}
 
 

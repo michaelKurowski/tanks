@@ -56,18 +56,20 @@ const tankProto = Object.assign(entity, {
 	},
 	adjustTrack(){ //TODO fix it
 
-		const headingVector = this.calcHeadingVr()
-		const facingDirection = mkMath.toUnitVr(headingVector)
+		const forwardFacingVec = mkMath.toUnitVr( this.calcHeadingVr() )
+		const backwardFacingVec = mkMath.reverseVec(forwardFacingVec)
 		const accelLength = mkMath.calcVrLength(this.accel)
 
-		const leftVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, true), accelLength)
-		const rightVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, false), accelLength)
+		const differenceNegatv = mkMath.subtractVr(this.accel, backwardFacingVec)
+		const differencePositv = mkMath.subtractVr(this.accel, forwardFacingVec)
 
-		const correctVec = mkMath.scaleVr(facingDirection, accelLength)
-
-
-
-		this.accel = [ (correctVec[0] + this.accel[0]) / 2, (correctVec[1] + this.accel[1]) /2  ] //Tracks friction
+		let correctedVec
+		if (mkMath.calcVrLength(differenceNegatv) > mkMath.calcVrLength(differencePositv)) {
+			correctedVec = mkMath.scaleVr(forwardFacingVec, accelLength)
+		} else {
+			correctedVec = mkMath.scaleVr(backwardFacingVec, accelLength)
+		}
+		this.accel = [ (correctedVec[0] + this.accel[0]) / 2, (correctedVec[1] + this.accel[1]) /2  ] //Tracks friction
 
 	},
 	animateHull(animFunction){//Definitelly deserves some refactoring and redesign
