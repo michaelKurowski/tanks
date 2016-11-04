@@ -50,6 +50,7 @@ WORK IN PROGRESS
 				return element / vectorLength
 			})
 		},
+		//TODO: finish
 		getLength: function(vector) {
 			return vector.reduce( function(previous, current) {
 				return ulmObj[ arithmeticMethodsProperty ].pyth(vec[0], vec[1], true)
