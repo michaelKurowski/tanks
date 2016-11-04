@@ -1,6 +1,70 @@
-// mkMath v. 00.00.01
+
 /*
-Small collection of functions that are essential for games related calculations
+	Ulm math library. Copyright by Michael Kurowski
+
+*/
+/*
+WORK IN PROGRESS
+
+
+;(function(globalObj) {
+	if (globalObj.ulmLibrary) throw 'Ulm Math Library: ulmLibrary name is already occupied.'
+	var ulmObj = {}
+
+	var vectorMethodsProperty = 'vec'
+	var arithmeticMethodsProperty = 'ar'
+
+
+
+	globalObj.ulmLibrary = function() {
+		ulmObj[vectorMethodsProperty] = VectorMethods
+		ulmObj[arithmeticMethodsProperty] = ArithmeticMethods
+		return ulmObj
+	}
+	var VectorMethods = {
+		sum: function(vectors) {
+			//Destructurizing arguments
+			var params = [];
+			params.push.apply(params, arguments);
+			//Summing vectors
+
+			return params.reduce( function(previous, current) {
+				return previous.map( function(element, index) {
+					return element + current[index]
+				})
+			})
+		},
+		sub: function(vectorA, vectorB) {
+			return vectorA.map( function(element, index) {
+				return element - vectorB[index]
+			})
+		},
+		scale: function(vector, scalar) {
+			return vector.map( function(element) {
+				return element * scalar
+			})
+		},
+		normalize: function(vector) { //Converting to unit vector
+			var vectorLength = this.getLength(vec)
+			return vector.map( function(element) {
+				return element / vectorLength
+			})
+		},
+		getLength: function(vector) {
+			return vector.reduce( function(previous, current) {
+				return ulmObj[ arithmeticMethodsProperty ].pyth(vec[0], vec[1], true)
+			})
+
+		}
+	}
+
+	var ArithmeticMethods = {
+		pyth: function(a, b, rootResult) {
+			rootResult = rootResult || true
+			return rootResult ? Math.sqrt( a * a + b * b ) : a * a + b * b
+		}
+	}
+})(window)
 
 */
 var mkMath = {
