@@ -77,11 +77,12 @@ const tankProto = Object.assign(entity, {
 			this.hullAnimTimer[0] = 0
 		}
 		this.hullOffset = animFunction(this.hullAnimTimer, this.hullOffset)
-
+		/*
 		if (this.hullOffset[0] > 5) this.hullOffset[0] = 5
 		if (this.hullOffset[1] > 5) this.hullOffset[1] = 5
 		if (this.hullOffset[0] < -5) this.hullOffset[0] = -5
 		if (this.hullOffset[1] < -5) this.hullOffset[1] = -5
+		*/
 
 	}
 
