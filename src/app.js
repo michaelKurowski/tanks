@@ -72,6 +72,7 @@ function renderScene() {
 		const angle = entity.rotation
 		//
 		entity.animateHull(mkAnims.wiggling)
+		//entity.animateTurret(mkAnims.push)
 		ctx.save();
 		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
 		// rotate the canvas to the specified degrees
@@ -85,7 +86,7 @@ function renderScene() {
 		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
 		// rotate the canvas to the specified degrees
 		ctx.rotate(turretAngle)
-		ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
+		ctx.translate(-sprite[0].width / 2 - entity.pos[0] + entity.turretOffset[0], -sprite[0].height / 2 - entity.pos[1] + entity.turretOffset[1])
 
 		ctx.drawImage(sprite[0], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
 

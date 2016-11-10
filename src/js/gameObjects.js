@@ -38,7 +38,7 @@ const tankProto = Object.assign(entity, {
 	hullOffset: [-2 ,-2],
 	turretOffset: [0, 0],
 	hullAnimTimer: [0, 5],
-	turretAnimTimer: [0, 20],
+	turretAnimTimer: [0, 10],
 	drivePush(forwardOrBackward) { //forward = 1, backward = -1
 		const headingVector = this.calcHeadingVr()
 		const direction = mkMath.scaleVr(mkMath.toUnitVr(headingVector), forwardOrBackward)
@@ -77,13 +77,20 @@ const tankProto = Object.assign(entity, {
 			this.hullAnimTimer[0] = 0
 		}
 		this.hullOffset = animFunction(this.hullAnimTimer, this.hullOffset)
-		/*
-		if (this.hullOffset[0] > 5) this.hullOffset[0] = 5
-		if (this.hullOffset[1] > 5) this.hullOffset[1] = 5
-		if (this.hullOffset[0] < -5) this.hullOffset[0] = -5
-		if (this.hullOffset[1] < -5) this.hullOffset[1] = -5
-		*/
 
+	},
+	animateTurret(animFunction){
+		if (this.turretAnimTimer[0]++ > this.turretAnimTimer[1]) { //Reseting anim
+			this.turretAnimTimer[0] = 0
+		}
+		this.turretOffset= animFunction(this.turretAnimTimer, this.turretOffset)
+		/*
+		if (this.turretAnimTimer[0]++) {
+			this.turretAnimTimer[0] = animFunction(this.turretAnimTimer, this.turretOffset)
+		} else if (this.turretAnimTimer[0] === this.turretAnimTimer[1]) {
+			this.turretAnimTimer[0] = 0
+		}
+		*/
 	}
 
 
