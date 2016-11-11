@@ -23,9 +23,9 @@ let lastRender = new Date().getTime()
 
 void function init () {
 	fitCanvas()
-	entities.push( tank([20, 20], 'rhino', 0) )
+	entities.push( tank([20, 20], ['tanks', 'rhino'], 0) )
 	player = entities[0]
-	Promise.all(loadAssets()).then(()=>{
+	Promise.all(loadAssets()).then(() => {
 		setInterval(logicTick, logicFrequency)
 	})//Temp
 }()
@@ -68,7 +68,12 @@ function renderScene() {
 	}
 	//TODO: finish it
 	entities.forEach( entity => {
-		const sprite = assets.images.tanks[entity.sprite]
+
+		const sprite = entity.sprite.reduce( (prevVal, currVal) => prevVal[currVal]}
+		, assets.images) //Loads sprite
+
+
+
 		const angle = entity.rotation
 		//
 		entity.animateHull(mkAnims.wiggling)
@@ -95,11 +100,11 @@ function renderScene() {
 		//TODO remove
 		const headingVector = entity.calcHeadingVr()
 		const facingDirection = mkMath.toUnitVr(headingVector)
-		const accelLength = mkMath.calcVrLength(entity.accel)
+		const velocLength = mkMath.calcVrLength(entity.veloc)
 
-		const leftVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, true), 200*accelLength)
-		const rightVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, false), 200*accelLength)
-		const frontVr = mkMath.scaleVr(facingDirection, 200*accelLength)
+		const leftVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, true), 200*velocLength)
+		const rightVr = mkMath.scaleVr(mkMath.getPerpendicularVr(facingDirection, false), 200*velocLength)
+		const frontVr = mkMath.scaleVr(facingDirection, 200*velocLength)
 
 
 		if (debugmode) {
