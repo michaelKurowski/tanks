@@ -5,15 +5,16 @@ const tank = function (position, type, rotation = 0) {
 	const newTank = Object.create(tankProto)
 	newTank.sprite = type
 	newTank.rotation = rotation
-	return Object.create(newTank)
+	return newTank
 }
 
 const projectile = function (rotation, speed, position, sprite) {
 	const newProjectile = Object.create(projectileProto)
 	newProjectile.rotation = rotation
 	newProjectile.veloc = mkMath.scaleVr(newProjectile.calcHeadingVr(), speed)
-	newProjectile.pos = newProjectile.pos(position)
-	return Object.create(newProjectile)
+	newProjectile.pos = position
+	newProjectile.sprite = sprite
+	return newProjectile
 }
 ////////////////////////////////////////// PROTOTYPES //////////////////////////////////////////
 const entity = {
@@ -42,7 +43,13 @@ const graphicalObject = {
 }
 
 const projectileProto = Object.assign({}, entity, graphicalObject, {
-
+	rotation: 0,
+	position: [0, 0],
+	veloc: [0, 0],
+	sprite: '',
+	propagate(){
+		this.move()
+	}
 })
 
 const tankProto = Object.assign({}, entity, graphicalObject, {
@@ -108,7 +115,9 @@ const tankProto = Object.assign({}, entity, graphicalObject, {
 		*/
 	},
 	shoot(){
-
+		const newProj = projectile(this.turretRotation + this.rotation, 10, this.pos, ['projectiles','AA'] )
+		console.log(newProj)
+		entities.push(newProj)
 	}
 
 

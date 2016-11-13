@@ -58,7 +58,7 @@ WORK IN PROGRESS
 
 		}
 	}
-
+e 
 	var ArithmeticMethods = {
 		pyth: function(a, b, rootResult) {
 			rootResult = rootResult || true

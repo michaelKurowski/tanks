@@ -36,6 +36,8 @@ function logicTick() {
 	if (keysStatus[37]) player.turretRotation-= 0.06
 	if (keysStatus[39]) player.turretRotation+= 0.06
 
+	if (keysStatus[32]) player.shoot()
+
 	if (keysStatus[83]) modifier = -1
 	if (keysStatus[87]) modifier = 1
 
@@ -43,8 +45,10 @@ function logicTick() {
 	if (keysStatus[68]) player.rotation += 0.07
 
 	if (modifier) player.drivePush(modifier)
-	player.propagate()
-
+	//player.propagate()
+	entities.forEach( entity => {
+		entity.propagate()
+	})
 	let currentTime = new Date().getTime();
 	if ( (lastRender + renderFrequency) < currentTime ) requestAnimationFrame(renderScene)
 }
@@ -68,35 +72,46 @@ function renderScene() {
 	}
 	//TODO: finish it
 	entities.forEach( entity => {
-
-		const sprite = entity.sprite.reduce( (prevVal, currVal) => prevVal[currVal]}
+		const sprite = entity.sprite.reduce( (prevVal, currVal) => prevVal[currVal]
 		, assets.images) //Loads sprite
 
 
 
-		const angle = entity.rotation
+		const angle = entity.rotation - 1.57079633
 		//
-		entity.animateHull(mkAnims.wiggling)
-		//entity.animateTurret(mkAnims.push)
-		ctx.save();
-		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
-		// rotate the canvas to the specified degrees
-		ctx.rotate(angle - 1.57079633)
-		ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
+		ctx.save()
+		if (entity.sprite[0] === 'tanks') {
+			entity.animateHull(mkAnims.wiggling)
+			//entity.animateTurret(mkAnims.push)
+			ctx.save();
+			ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
+			// rotate the canvas to the specified degrees
+			ctx.rotate(angle)
+			ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
 
-		ctx.drawImage(sprite[2], entity.pos[0], entity.pos[1], 250, 250)
-		ctx.drawImage(sprite[1], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
+			ctx.drawImage(sprite[2], entity.pos[0], entity.pos[1], 250, 250)
+			ctx.drawImage(sprite[1], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
 
-		const turretAngle = entity.turretRotation
-		ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
-		// rotate the canvas to the specified degrees
-		ctx.rotate(turretAngle)
-		ctx.translate(-sprite[0].width / 2 - entity.pos[0] + entity.turretOffset[0], -sprite[0].height / 2 - entity.pos[1] + entity.turretOffset[1])
+			const turretAngle = entity.turretRotation
+			ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
+			// rotate the canvas to the specified degrees
+			ctx.rotate(turretAngle)
+			ctx.translate(-sprite[0].width / 2 - entity.pos[0] + entity.turretOffset[0], -sprite[0].height / 2 - entity.pos[1] + entity.turretOffset[1])
 
-		ctx.drawImage(sprite[0], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
+			ctx.drawImage(sprite[0], entity.pos[0] + entity.hullOffset[0], entity.pos[1] + entity.hullOffset[1], 250, 250)
 
-		ctx.restore();
 
+		} else {
+			ctx.translate(entity.pos[0] + sprite.width / 2, entity.pos[1] + sprite.height / 2)
+			// rotate the canvas to the specified degrees
+			ctx.rotate(angle)
+			ctx.translate(-sprite.width / 2 - entity.pos[0], -sprite.height / 2 - entity.pos[1])
+
+			ctx.drawImage(sprite[0], entity.pos[0], entity.pos[1], 250, 250)
+
+
+		}
+		ctx.restore()
 		//TODO remove
 		const headingVector = entity.calcHeadingVr()
 		const facingDirection = mkMath.toUnitVr(headingVector)
