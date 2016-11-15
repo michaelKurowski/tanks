@@ -102,10 +102,10 @@ function renderScene() {
 
 
 		} else {
-			ctx.translate(entity.pos[0] + sprite.width / 2, entity.pos[1] + sprite.height / 2)
+			ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)
 			// rotate the canvas to the specified degrees
 			ctx.rotate(angle)
-			ctx.translate(-sprite.width / 2 - entity.pos[0], -sprite.height / 2 - entity.pos[1])
+			ctx.translate(-sprite[0].width / 2 - entity.pos[0], -sprite[0].height / 2 - entity.pos[1])
 
 			ctx.drawImage(sprite[0], entity.pos[0], entity.pos[1], 250, 250)
 
