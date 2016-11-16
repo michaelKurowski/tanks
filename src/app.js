@@ -81,7 +81,7 @@ function renderScene() {
 		//
 		ctx.save()
 		if (entity.sprite[0] === 'tanks') {
-			entity.animateHull(mkAnims.wiggling)
+			//entity.animateHull(mkAnims.wiggling)
 			//entity.animateTurret(mkAnims.push)
 			ctx.save();
 			ctx.translate(entity.pos[0] + sprite[0].width / 2, entity.pos[1] + sprite[0].height / 2)

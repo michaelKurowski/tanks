@@ -59,7 +59,7 @@ const tankProto = Object.assign({}, entity, graphicalObject, {
 	hullOffset: [-2 ,-2],
 	turretOffset: [0, 0],
 	hullAnimTimer: [0, 5],
-	turretAnimTimer: [0, 10],
+	turretAnimTimer: [0, 5],
 	projectileSprite: '',
 	drivePush(forwardOrBackward) { //forward = 1, backward = -1
 		const headingVector = this.calcHeadingVr()
@@ -75,6 +75,8 @@ const tankProto = Object.assign({}, entity, graphicalObject, {
 		this.veloc = mkMath.scaleVr(this.veloc, 0.98)
 		this.adjustTrack()
 		this.move()
+		this.animateHull(mkAnims.wiggling)
+		this.animateTurret(mkAnims.push)
 	},
 	adjustTrack(){ //TODO fix it
 
@@ -102,10 +104,14 @@ const tankProto = Object.assign({}, entity, graphicalObject, {
 
 	},
 	animateTurret(animFunction){
-		if (this.turretAnimTimer[0]++ > this.turretAnimTimer[1]) { //Reseting anim
-			this.turretAnimTimer[0] = 0
+
+		if (this.turretAnimTimer[0] !== 0) {
+			this.turretAnimTimer[0]++
+			if (this.turretAnimTimer[0] > this.turretAnimTimer[1]) { //Reseting anim
+				this.turretAnimTimer[0] = 0
+			}
+			this.turretOffset= animFunction(this.turretAnimTimer, this.turretOffset)
 		}
-		this.turretOffset= animFunction(this.turretAnimTimer, this.turretOffset)
 		/*
 		if (this.turretAnimTimer[0]++) {
 			this.turretAnimTimer[0] = animFunction(this.turretAnimTimer, this.turretOffset)
@@ -116,6 +122,7 @@ const tankProto = Object.assign({}, entity, graphicalObject, {
 	},
 	shoot(){
 		const newProj = projectile(this.turretRotation + this.rotation, 10, this.pos, ['projectiles','AA'] )
+		this.turretAnimTimer[0] = 1
 		console.log(newProj)
 		entities.push(newProj)
 	}
